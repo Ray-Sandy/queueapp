@@ -60,12 +60,12 @@
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        @include('queue.template.navbar')
+        @include('cs.template.navbar')
     </nav>
     <!-- /.navbar -->
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-default elevation-4">
-        @include('queue.template.sidebar')
+        @include('cs.template.sidebar')
         <!-- /.sidebar -->
     </aside>
     <!-- Content Wrapper. Contains page content -->
@@ -119,8 +119,8 @@
                                 <form action="{{ route('cs.call', ['id' => $queue->id]) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-
-                                    <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                    <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal">
+                                        <i class="fa-solid fa-phone"></i> Panggil</button>
                                 </form>
                             @endif
                             @if($queue->status == 'processing')
@@ -136,7 +136,8 @@
                                     @csrf
                                     @method('PUT')
 
-                                    <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                    <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal">
+                                        <i class="fa-solid fa-phone"></i> Panggil</button>
                                 </form>
                             @endif
                             @if($queue->status == 'processing' || $queue->status == 'skipped')
@@ -146,10 +147,9 @@
 
                                     {{-- <button type="submit" class="btn btn-block btn-default btn-xs">
                                         <i class="fa-solid fa-square-check"></i> Selesai</button> --}}
-                                        <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal">
+                                        <button type="submit" class="btn btn-block btn-default btn-xs">
                                             <i class="fa-solid fa-square-check"></i> Selesai
                                         </button>
-
                                 </form>
                             @endif
                             </td>
@@ -189,7 +189,9 @@
                                         @csrf
                                         @method('PUT')
 
-                                        <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                        {{-- <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button> --}}
+                                        <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal">
+                                            <i class="fa-solid fa-phone"></i> Panggil</button>
                                     </form>
                                 @endif
                                 @if($queue->status == 'processing' || $queue->status == 'skipped')
@@ -197,7 +199,7 @@
                                         @csrf
                                         @method('PUT')
 
-                                        <button type="submit" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal">
+                                        <button type="submit" class="btn btn-block btn-default btn-xs">
                                             <i class="fa-solid fa-square-check"></i> Selesai</button>
                                     </form>
                                 @endif
@@ -265,7 +267,7 @@
                                           @csrf
                                           @method('PUT')
 
-                                          <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                          <button type="button" class="btn btn-block btn-default btn-xs " data-toggle="modal" data-target="#qrCodeScannerModal"><i class="fa-solid fa-phone"></i> Panggil</button>
                                       </form>
                                   @endif
                                   @if($queue->status == 'processing' && $queue->counter == 'pembayaran')
@@ -281,7 +283,7 @@
                                           @csrf
                                           @method('PUT')
 
-                                          <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                          <button type="button" class="btn btn-block btn-default btn-xs " data-toggle="modal" data-target="#qrCodeScannerModal"><i class="fa-solid fa-phone"></i> Panggil</button>
                                       </form>
                                   @endif
                                   @if($queue->status == 'processing' || $queue->status == 'skipped')
@@ -291,7 +293,7 @@
 
                                           {{-- <button type="submit" class="btn btn-block btn-default btn-xs">
                                             <i class="fa-solid fa-square-check"></i> Selesai</button> --}}
-                                            <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal">
+                                            <button type="submit" class="btn btn-block btn-default btn-xs">
                                                 <i class="fa-solid fa-square-check"></i> Selesai
                                             </button>
                                       </form>
@@ -328,7 +330,7 @@
                                     <form action="{{ route('cs.call', ['id' => $queue->id]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                        <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal"><i class="fa-solid fa-phone"></i> Panggil</button>
                                     </form>
                                 @endif
                                 @if($queue->status == 'processing' && $queue->counter == 'pemesanan')
@@ -342,14 +344,14 @@
                                     <form action="{{ route('cs.call', ['id' => $queue->id]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                        <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal"><i class="fa-solid fa-phone"></i> Panggil</button>
                                     </form>
                                 @endif
                                 @if($queue->status == 'processing' || $queue->status == 'skipped' && $queue->counter == 'pemesanan')
                                     <form action="{{ route('cs.complete', ['id' => $queue->id]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal">
+                                        <button type="submit" class="btn btn-block btn-default btn-xs">
                                             <i class="fa-solid fa-square-check"></i> Selesai</button>
                                     </form>
                                 @endif
@@ -384,7 +386,7 @@
                                     <form action="{{ route('cs.call', ['id' => $queue->id]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                        <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal"><i class="fa-solid fa-phone"></i> Panggil</button>
                                     </form>
                                 @endif
                                 @if($queue->status == 'processing' && $queue->counter == 'tukar-barang')
@@ -398,14 +400,14 @@
                                     <form action="{{ route('cs.call', ['id' => $queue->id]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-block btn-default btn-xs "><i class="fa-solid fa-phone"></i> Panggil</button>
+                                        <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal"><i class="fa-solid fa-phone"></i> Panggil</button>
                                     </form>
                                 @endif
                                 @if($queue->status == 'processing' || $queue->status == 'skipped' && $queue->counter == 'tukar-barang')
                                     <form action="{{ route('cs.complete', ['id' => $queue->id]) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#qrCodeScannerModal">
+                                        <button type="submit" class="btn btn-block btn-default btn-xs">
                                             <i class="fa-solid fa-square-check"></i> Selesai
                                         </button>
                                     </form>
@@ -423,16 +425,19 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="qrCodeScannerModalLabel">QR Code Scanner</h5>
+                                <h5 class="modal-title" id="qrCodeScannerModalLabel">QR Code Scanner Selesai</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
+                            @if($errors->any())
+                                <h1 class="text-sm">{{$errors->first()}}</h1>
+                            @endif
                             <div class="modal-body">
                                 <div id="qrCodeScanner"></div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="qrCodeScannerModalClose">Close</button>
                             </div>
                         </div>
                     </div>
@@ -443,6 +448,7 @@
                     {{-- @method('PUT') <!-- Specify the method as PUT --> --}}
                     <input type="hidden" name="id" id="queueIdInput">
                     <input type="hidden" name="counter" id="queueCounterInput">
+                    <input type="hidden" name="status" id="queueStatusInput">
                 </form>
             </section>
         </section>
@@ -605,66 +611,361 @@
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <!-- JavaScript to handle QR code scanning -->
 {{-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const qrCodeScanner = new Html5QrcodeScanner(
-            "qrCodeScanner",
-            { fps: 10, qrbox: 250 },
-            /* verbose= */ false
-        );
+    let qrCodeScannerCall // Declare the scanner variable at a higher scope to make it accessible to other functions
+    let isRequestInProgressCall = false; // Add this variable
 
-        qrCodeScanner.render(onScanSuccess);
+    function onScanSuccess(qrCodeMessageCall) {
+        // Parse the scanned data from the QR code
+        const scannedDataCall = JSON.parse(qrCodeMessageCall);
+        // Fill the form with scanned data and submit
+        document.getElementById("queueIdInputCall").value = scannedDataCall.id;
+        document.getElementById("queueCounterInputCall").value = scannedDataCall.counter;
+        document.getElementById("queueStatusInputCall").value = scannedDataCall.status;
+        // Submit the form using AJAX
+        $.ajax({
+            url: "{{ route('cs.validate-queue') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: scannedDataCall.id,
+                counter: scannedDataCall.counter,
+                status: scannedDataCall.status,
+            },
+            dataType: 'json',
+            success: function (response) {
+                // Handle the response from the server
+                // alert(response.success);
+                // console.log(response);
+                // alert (response.status)
+                if (response.success == true) {
+                    if (response.status == 'processing') {
+                        toastr.success('Data berhasil tervalidasi.');
+                        // Reload the page after the success message is shown
+                        window.location.reload();
+                    } else {
+                        // If the status is not "completed," show an error message
+                        toastr.error('Terjadi kesalahan. Status tidak sedang pending ');
+                    }
+                } else {
+                    // Validation failed, show error message
+                    toastr.error('Data gagal tervalidasi. Coba lagi.');
+                }
+                // Reset the request in progress flag
+                isRequestInProgressCall = false;
+                stopScanner();
+            },
+            error: function (response) {
+                toastr.error('Terjadi kesalahan. Coba lagi.');
+                // console.log(response);
+                // Reset the request in progress flag
+                isRequestInProgressCall = false;
+                stopScanner();
+            }
+        });
+    }
+    function onScanFailure(qrCodeMessageCall) {
+        // Parse the scanned data from the QR code
+        const scannedDataCall = JSON.parse(qrCodeMessageCall);
+        // alert(response);
+        //         console.log(response);
+        // Validation failed, show error message
+        toastr.error('Data gagal tervalidasi. Coba lagi.');
+        stopScanner();
+    }
 
-        function onScanSuccess(qrCodeMessage) {
-            // Parse the scanned data from the QR code
-            const scannedData = JSON.parse(qrCodeMessage);
-
-            // Fill the form with scanned data and submit
-            document.getElementById("queueIdInput").value = scannedData.id;
-            document.getElementById("queueCounterInput").value = scannedData.counter;
-            document.getElementById("qrCodeSubmitForm").submit();
+    function stopScanner() {
+        if (qrCodeScannerCall) { // Check if the QR scanner exists
+        qrCodeScannerCall.stop().then((ignore) => {
+            // QR Code scanning is stopped.
+            if ($("#html5-qrcode-button-camera-stop").length && !$('#qr-canvas').is(':visible')
+            )
+            $("#html5-qrcode-button-camera-stop").trigger("click");
+        }).catch((err) => {
+            // Stop failed, handle it.
+        });
         }
 
-        $('#qrCodeScannerModal').on('hidden.bs.modal', function () {
+
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        qrCodeScannerCall = new Html5QrcodeScanner(
+            "qrCodeScannerCall",
+            { fps: 10, qrbox: 250 },
+            false,
+        );
+        qrCodeScannerCall.render(onScanSuccess, onScanFailure);
+
+        $('#qrCodeScannerModalCall').on('hidden.bs.modal', function () {
             // Stop the QR code scanner when the modal is closed
-            qrCodeScanner.stop();
+            stopScanner();
+        });
+
+        // Listen to the form submit event
+        $('#qrCodeSubmitFormCall').on('submit', function (event) {
+            event.preventDefault();
+
+            if (isRequestInProgressCall) {
+                // If a request is in progress, stop the scanner and return
+                stopScanner();
+                return;
+            }
+            // Set the request in progress flag to true
+            isRequestInProgressCall = true;
+            // Start the QR code scanner
+            qrCodeScannerCall.start().then(function () {
+                qrCodeScannerCall.scan();
+            }).catch(function (error) {
+                // Failed to start the QR code scanner, show an error message
+                toastr.error('Terjadi kesalahan saat memulai pemindaian. Silakan coba lagi.');
+                isRequestInProgressCall = false;
+                stopScanner();
+            });
         });
     });
 </script> --}}
-<!-- JavaScript to handle QR code scanning -->
-<!-- JavaScript to handle QR code scanning -->
 <script>
+     // Declare the scanner variable at a higher scope to make it accessible to other functions
+    let isRequestInProgress = false; // Add this variable
+
+
+
+    function onScanSuccess(qrCodeMessage) {
+        // Parse the scanned data from the QR code
+        const scannedData = JSON.parse(qrCodeMessage);
+        // Fill the form with scanned data and submit
+        document.getElementById("queueIdInput").value = scannedData.id;
+        document.getElementById("queueCounterInput").value = scannedData.counter;
+        document.getElementById("queueStatusInput").value = scannedData.status;
+        // Submit the form using AJAX
+        $.ajax({
+            url: "{{ route('cs.complete-queue') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: scannedData.id,
+                counter: scannedData.counter,
+                status: scannedData.status,
+            },
+            dataType: 'json',
+            success: function (response) {
+                // Handle the response from the server
+                // alert(response.success);
+                // console.log(response);
+                // alert (response.status)
+                isRequestInProgress = false;
+                if (response.success == true) {
+                    if (response.status == 'processing') {
+                        toastr.success('Data berhasil tervalidasi.');
+                        // Reload the page after the success message is shown
+                        window.location.reload();
+                    } else {
+                        // If the status is not "completed," show an error message
+                        toastr.error('Terjadi kesalahan. Status tidak sedang processing ');
+                    }
+                } else {
+                    // Validation failed, show error message
+                    toastr.error('Data gagal tervalidasi. Coba lagi. Error:'+response.error);
+                }
+            },
+            error: function (response) {
+                toastr.error('Terjadi kesalahan. Coba lagi.');
+                // console.log(responses);
+                // Reset the request in progress flag
+                isRequestInProgress = false;
+            }
+        });
+    }
+
+
+
+    function onScanFailure(qrCodeMessage) {
+        // Parse the scanned data from the QR code
+        const scannedData = JSON.parse(qrCodeMessage);
+        // alert(response);
+        //         console.log(response);
+        // Validation failed, show error message
+        toastr.error('Data gagal tervalidasi. Coba lagi.');
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let qrCodeScanner;
+
+        function stopScanner() {
+            qrCodeScanner = new Html5QrcodeScanner("qrCodeScanner");
+            qrCodeScanner.stop()
+            .then(ignore => {
+                // QR Code scanning is stopped.
+            })
+            .catch(err => {
+                // Stop failed, handle it.
+            });
+        }
+
+        qrCodeScanner = new Html5QrcodeScanner(
+            "qrCodeScanner",
+            { fps: 10, qrbox: 250, rememberLastUsedCamera: true},
+            /* verbose= */ false,
+        );
+        qrCodeScanner.render(onScanSuccess, onScanFailure);
+
+        $('#qrCodeScannerModal').on('hidden.bs.modal', function () {
+            // Stop the QR code scanner when the modal is closed
+            stopScanner();
+        });
+
+        // Listen to the form submit event
+        $('#qrCodeSubmitForm').on('submit', function (event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            if (isRequestInProgress) {
+                // If a request is in progress, stop the scanner and return
+                stopScanner();
+                return;
+            }
+            // Set the request in progress flag to true
+            isRequestInProgress = true;
+            // Start the QR code scanner
+            qrCodeScanner.start().then(function () {
+                // QR code scanner started successfully, proceed with scanning
+                qrCodeScanner.scan();
+            }).catch(function (error) {
+                // Failed to start the QR code scanner, show an error message
+                toastr.error('Terjadi kesalahan saat memulai pemindaian. Silakan coba lagi.');
+                isRequestInProgress = false;
+            });
+        });
+    });
+</script>
+{{-- <script>
+    let qrCodeScannerCall;
     let qrCodeScanner; // Declare the scanner variable at a higher scope to make it accessible to other functions
     let isRequestInProgress = false; // Add this variable
 
-    // Function to stop the QR code scanner
+
+    function onScanFailure(qrCodeMessage) {
+        // Parse the scanned data from the QR code
+        const scannedData = JSON.parse(qrCodeMessage);
+        // alert(response);
+        //         console.log(response);
+        // Validation failed, show error message
+        toastr.error('Data gagal tervalidasi. Coba lagi.');
+    }
+
     function stopScanner() {
         if (qrCodeScanner) {
-            qrCodeScanner.clear();
+            qrCodeScanner.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+            }).catch((err) => {
+                // Stop failed, handle it.
+            });
         }
     }
 
-    html5QrCode.stop().then((ignore) => {
-    // QR Code scanning is stopped.
-    }).catch((err) => {
-    // Stop failed, handle it.
-    });
-
     document.addEventListener('DOMContentLoaded', function () {
-        qrCodeScanner = new Html5QrcodeScanner(
-            "qrCodeScanner",
-            { fps: 10, qrbox: 250 },
-            /* verbose= */ false
-        );
-
-        qrCodeScanner.render(onScanSuccess);
-
         function onScanSuccess(qrCodeMessage) {
             // Parse the scanned data from the QR code
             const scannedData = JSON.parse(qrCodeMessage);
+            // Fill the form with scanned data and submit
+            document.getElementById("queueIdInputCall").value = scannedData.id;
+            document.getElementById("queueCounterInputCall").value = scannedData.counter;
+            document.getElementById("queueStatusInputCall").value = scannedData.status;
 
+            // Submit the form using AJAX
+            $.ajax({
+                url: "{{ route('cs.validate-queue') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: scannedData.id,
+                    counter: scannedData.counter,
+                    status: scannedData.status,
+                },
+                dataType: 'json',
+                success: function (response) {
+                    // Handle the response from the server
+                    // alert(response.success);
+                    // console.log(response);
+                    // alert (response.status)
+                    if (response.success == true) {
+                        if (response.status == 'processing') {
+                            toastr.success('Data berhasil tervalidasi.');
+                            // Reload the page after the success message is shown
+                            window.location.reload();
+                        } else {
+                            // If the status is not "completed," show an error message
+                            toastr.error('Terjadi kesalahan. Status tidak sedang pending ');
+                        }
+                    } else {
+                        // Validation failed, show error message
+                        toastr.error('Data gagal tervalidasi. Coba lagi.');
+                    }
+                    // Reset the request in progress flag
+                    isRequestInProgress = false;
+                },
+                error: function (response) {
+                    toastr.error('Terjadi kesalahan. Coba lagi.');
+                    // console.log(response);
+                    // Reset the request in progress flag
+                    isRequestInProgress = false;
+                }
+            });
+        }
+        qrCodeScannerCall = new Html5QrcodeScanner(
+            "qrCodeScannerCall",
+            { fps: 10, qrbox: 250 },
+            false,
+        );
+        qrCodeScannerCall.render(onScanSuccess, onScanFailure);
+
+        $('#qrCodeScannerModalCall').on('hidden.bs.modal', function () {
+            // Stop the QR code scanner when the modal is closed
+            qrCodeScanner.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+            }).catch((err) => {
+                // Stop failed, handle it.
+            });
+        });
+
+        // Listen to the form submit event
+        $('#qrCodeSubmitFormCall').on('submit', function (event) {
+            event.preventDefault();
+            if (isRequestInProgress) {
+                // If a request is in progress, stop the scanner and return
+                qrCodeScanner.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+                }).catch((err) => {
+                    // Stop failed, handle it.
+                });
+                return;
+            }
+            // Set the request in progress flag to true
+            isRequestInProgress = true;
+            // Start the QR code scanner
+            qrCodeScannerCall.start().then(function () {
+                qrCodeScannerCall.scan();
+            }).catch(function (error) {
+                // Failed to start the QR code scanner, show an error message
+                toastr.error('Terjadi kesalahan saat memulai pemindaian. Silakan coba lagi.');
+                isRequestInProgress = false;
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        function onScanSuccess(qrCodeMessage) {
+            // Parse the scanned data from the QR code
+            const scannedData = JSON.parse(qrCodeMessage);
             // Fill the form with scanned data and submit
             document.getElementById("queueIdInput").value = scannedData.id;
             document.getElementById("queueCounterInput").value = scannedData.counter;
+            document.getElementById("queueStatusInput").value = scannedData.status;
+
+
 
             // Submit the form using AJAX
             $.ajax({
@@ -673,19 +974,139 @@
                 data: {
                     _token: "{{ csrf_token() }}",
                     id: scannedData.id,
-                    counter: scannedData.counter
+                    counter: scannedData.counter,
+                    status: scannedData.status,
                 },
+                dataType: 'json',
+
                 success: function (response) {
                     // Handle the response from the server
+                    // alert(response.success);
+                    // console.log(response);
+                    // alert (response.status)
+                    isRequestInProgress = false;
                     if (response.success == true) {
-                        if (response.status === 'completed') {
+                        if (response.status == 'completed') {
                             toastr.success('Data berhasil tervalidasi.');
 
                             // Reload the page after the success message is shown
                             window.location.reload();
                         } else {
                             // If the status is not "completed," show an error message
-                            toastr.error('Terjadi kesalahan. Status tidak sesuai.');
+                            toastr.error('Terjadi kesalahan. Status tidak sedang processing ');
+                        }
+                    } else {
+                        // Validation failed, show error message
+                        toastr.error('Data gagal tervalidasi. Coba lagi.');
+                    }
+                },
+                error: function (responses) {
+                    toastr.error('Terjadi kesalahan. Coba lagi.');
+                    // console.log(responses);
+                    // Reset the request in progress flag
+                    isRequestInProgress = false;
+                }
+            });
+        }
+        qrCodeScanner = new Html5QrcodeScanner(
+            "qrCodeScanner",
+            { fps: 10, qrbox: 250 },
+            verbose=  false,
+        );
+        qrCodeScanner.render(onScanSuccess, onScanFailure);
+
+        $('#qrCodeScannerModal').on('hidden.bs.modal', function() {
+            // Stop the QR code scanner when the modal is closed
+            qrCodeScanner.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+            }).catch((err) => {
+                // Stop failed, handle it.
+            });
+        });
+
+        // Listen to the form submit event
+        $('#qrCodeSubmitForm').on('submit', function (event) {
+            event.preventDefault();
+            if (isRequestInProgress) {
+                qrCodeScanner.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+                }).catch((err) => {
+                    // Stop failed, handle it.
+                });
+                return;
+            }
+            // Set the request in progress flag to true
+            isRequestInProgress = true;
+            // Start the QR code scanner
+            qrCodeScanner.start().then(function () {
+                // QR code scanner started successfully, proceed with scanning
+                qrCodeScanner.scan();
+            }).catch(function (error) {
+                // Failed to start the QR code scanner, show an error message
+                toastr.error('Terjadi kesalahan saat memulai pemindaian. Silakan coba lagi.');
+                isRequestInProgress = false;
+            });
+        });
+    });
+</script> --}}
+{{-- <script>
+    let qrCodeScanner; // Declare the scanner variable at a higher scope to make it accessible to other functions
+    let isRequestInProgress = false; // Add this variable
+
+    // Function to stop the QR code scanner
+    function stopScanner() {
+        if (qrCodeScanner) {
+            qrCodeScanner.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+            }).catch((err) => {
+                // Stop failed, handle it.
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const qrCodeScanner = new Html5QrcodeScanner(
+            "qrCodeScanner",
+            { fps: 10, qrbox: 250 },
+            verbose=  false,
+        );
+        qrCodeScanner.render(onScanSuccess, onScanFailure);
+
+        function onScanSuccess(qrCodeMessage) {
+            // Parse the scanned data from the QR code
+            const scannedData = JSON.parse(qrCodeMessage);
+
+            // Fill the form with scanned data and submit
+            document.getElementById("queueIdInput").value = scannedData.id;
+            document.getElementById("queueCounterInput").value = scannedData.counter;
+            document.getElementById("queueStatusInput").value = scannedData.status;
+
+            // Submit the form using AJAX
+            $.ajax({
+                url: "{{ route('cs.complete-queue') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: scannedData.id,
+                    counter: scannedData.counter,
+                    status: scannedData.status,
+                },
+                dataType: 'json',
+
+                success: function (response) {
+                    // Handle the response from the server
+                    // alert(response.success);
+                    // console.log(response);
+                    // alert (response.status)
+                    if (response.success == true) {
+                        if (response.status == 'processing') {
+                            toastr.success('Data berhasil tervalidasi.');
+
+                            // Reload the page after the success message is shown
+                            // window.location.reload();
+                        } else {
+                            // If the status is not "completed," show an error message
+                            toastr.error('Terjadi kesalahan. Status tidak sedang processing ');
                         }
                     } else {
                         // Validation failed, show error message
@@ -695,13 +1116,21 @@
                     // Reset the request in progress flag
                     isRequestInProgress = false;
                 },
-                error: function () {
+                error: function (responses) {
                     toastr.error('Terjadi kesalahan. Coba lagi.');
-
+                    // console.log(responses);
                     // Reset the request in progress flag
                     isRequestInProgress = false;
                 }
             });
+        }
+        function onScanFailure(qrCodeMessage) {
+            // Parse the scanned data from the QR code
+            const scannedData = JSON.parse(qrCodeMessage);
+            // alert(response);
+            //         console.log(response);
+            // Validation failed, show error message
+            toastr.error('Data gagal tervalidasi. Coba lagi.');
         }
 
         $('#qrCodeScannerModal').on('hidden.bs.modal', function () {
@@ -732,8 +1161,39 @@
                 isRequestInProgress = false;
             });
         });
+
+
     });
+</script> --}}
+
+<!-- JavaScript to handle QR code scanning -->
+<script>
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const qrCodeScanner = new Html5QrcodeScanner(
+    //         "qrCodeScanner",
+    //         { fps: 10, qrbox: 250 },
+    //         /* verbose= */ false
+    //     );
+
+    //     qrCodeScanner.render(onScanSuccess);
+
+    //     function onScanSuccess(qrCodeMessage) {
+    //         // Parse the scanned data from the QR code
+    //         const scannedData = JSON.parse(qrCodeMessage);
+
+    //         // Fill the form with scanned data and submit
+    //         document.getElementById("queueIdInput").value = scannedData.id;
+    //         document.getElementById("queueCounterInput").value = scannedData.counter;
+    //         document.getElementById("qrCodeSubmitForm").submit();
+    //     }
+
+    //     $('#qrCodeScannerModal').on('hidden.bs.modal', function () {
+    //         // Stop the QR code scanner when the modal is closed
+    //         qrCodeScanner.stop();
+    //     });
+    // });
 </script>
+<!-- JavaScript to handle QR code scanning -->
 
 {{-- <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></>
 <script>

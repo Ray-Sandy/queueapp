@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+
 use App\Models\Queue;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class CustomerServiceController extends Controller
 {
@@ -59,103 +57,81 @@ class CustomerServiceController extends Controller
 
         return redirect()->route('cs.index')->with('success', 'Antrian telah selesai.');
     }
-    // public function completeQueue(Request $request)
-    // {
-    //     $queueId = $request->input('queue_id');
-
-    //     // Find the queue by its ID
-    //     $queue = Queue::findOrFail($queueId);
-
-    //     // Update the status of the queue to "completed"
-    //     $queue->status = 'completed';
-    //     $queue->save();
-
-    //     return response()->json(['message' => 'Queue completed successfully']);
-    // }
-    // Add this function to the CustomerServiceController.php
     // public function validateQRCode(Request $request)
     // {
-    //     $data = $request->all();
+    //     $validator = Validator::make($request->all(), [
+    //         'id' => 'required|integer',
+    //         'counter' => 'required|string',
+    //         'status' => 'required',
+    //     ]);
 
-    //     // Find the queue in the database based on the scanned data
-    //     $queue = Queue::find($data['id']);
-
-    //     if ($queue && $queue->status === 'pending' && $queue->counter === $data['counter']
-    //         && $queue->name === $data['name'] && $queue->phone_number === $data['phone_number']
-    //         && $queue->created_at->format('Y-m-d H:i:s') === $data['created_at']) {
-
-    //         // Valid data, update the status to 'completed'
-    //         DB::beginTransaction();
-    //         try {
-    //             $queue->status = 'completed';
-    //             $queue->save();
-    //             DB::commit();
-
-    //             return response()->json(['success' => true]);
-    //         } catch (\Exception $e) {
-    //             DB::rollback();
-    //             return response()->json(['success' => false]);
-    //         }
+    //     if ($validator->fails()) {
+    //         return response()->json(['success' => false]);
     //     }
 
+    //     $queue = Queue::find($request->id);
+
+    //     if (!$queue) {
+    //         return response()->json(['success' => false]);
+    //     }else
+
+    //     if ($queue->status === 'complated' || $queue->status === 'processing' ) {
+    //         // Data is valid, return success
+    //         return response()->json(['success' => false]);
+    //     }
+    //     if ($queue->status === 'pending' || $queue->status === 'skipped') {
+    //         // Data is valid, return success
+    //         $queue->status = 'processing';
+    //         $queue->save();
+    //         return response()->json(['success' => true, 'status' => $queue->status]);
+    //     }
+
+    //     if ($queue->counter !== $request->counter) {
+    //         // return back()->with('error', 'Invalid counter for the queue.');
+    //         return response()->json(['success' => false]);
+    //     }
+
+    //      // Mark the queue as processing
+    //     $queue->status = 'processing';
+    //     $queue->save();
+
     //     // Data not valid
-    //     return response()->json(['success' => false]);
+    //     return response()->json(['success' => true, 'status' => $queue->status]);
     // }
-    public function validateQRCode(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|integer',
-            'counter' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['success' => false]);
-        }
-
-        $queue = Queue::find($request->id);
-
-        if (!$queue) {
-            return response()->json(['success' => false]);
-        }else
-
-        if ($queue->id === $request->id && $queue->counter === $request->counter) {
-            // Data is valid, return success
-            return response()->json(['success' => true]);
-        }
-
-        // Data not valid
-        return response()->json(['success' => false]);
-    }
+    //
     public function completeQueue(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
             'counter' => 'required|string',
-            ''
+            'status' => 'required|string',
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return response()->json(['success' => false, 'error' => "Validasi salah."]);
         }
 
         $queue = Queue::find($request->id);
 
         if (!$queue) {
-            return back()->with('error', 'Queue not found.');
+            return response()->json(['success' => false, 'error' => "ID tidak ditemukan."]);
         }
 
-        if ($queue->status === 'completed') {
-            return back()->with('error', 'Queue is already completed.');
+        if ($queue->id != $request->id || $queue->counter != $request->counter) {
+            return response()->json(['success' => false, 'error' => "Data tidak sesuai antara ID atau counternya."]);
         }
 
-        if ($queue->counter !== $request->counter) {
-            return back()->with('error', 'Invalid counter for the queue.');
+        if ($queue->status == 'completed' || $queue->status == 'processing') {
+            return response()->json(['success' => false, 'error' => "Status sudah diproses atau Status sudah selesai."]);
         }
 
-        // Mark the queue as completed
-        $queue->status = 'completed';
-        $queue->save();
+        if ($queue->status == 'skipped' || $queue->status == 'pending') {
+            // Mark the queue as processing
+            $queue->status = 'processing';
+            $queue->save();
+            return response()->json(['success' => true, 'status' => $queue->status]);
+        }
 
-        return back()->with('success', 'Queue completed successfully.');
+        return response()->json(['success' => false, 'error' => "Status tidak valid."]);
     }
 }

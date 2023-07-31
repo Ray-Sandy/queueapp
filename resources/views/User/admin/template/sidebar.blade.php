@@ -33,19 +33,13 @@
           <li class="nav-item">
             <a href="" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
-              <p>Dashboard v1</p>
+              <p>Admin</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Dashboard v2</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Dashboard v3</p>
+              <p>Logout</p>
             </a>
           </li>
         </ul>

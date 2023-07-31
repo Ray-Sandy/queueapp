@@ -180,7 +180,7 @@
                         <div class="chart tab-pane active container-fluid" id="revenue-chart"
                             style="position: relative; height: auto;">
                             {{-- <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas> --}}
-                            <table id="example1" id="revenue-chart-canvas" class="table table-bordered table-striped text-md">
+                            <table id="example1" id="revenue-chart-canvas" id="list-table" class="table table-bordered table-striped text-md">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -245,19 +245,17 @@
                         Qr Code
                         </h3>
                       </div><!-- /.card-header -->
-                    <div class="card-body" >
-                        <div id="qr-code-container" class="tab-content">
+                    <div class="card-body" id="refreshing-div" >
+                        <div id="qrcode-container" class="tab-content">
                         <!-- Morris chart - Sales -->
-                        @if ($data['status'] === 'processing' || $data['status'] === 'complated')
-                            <!-- QR Code Section -->
-                            <div id="qrcode">{!! $qrCode !!}</div>
-                        @endif
+                        {!! $qrCode !!}
                         </div>
                     </div><!-- /.card-body -->
                     <div class="card-footer">
-                        <p>Qr code akan muncul hanya ketika status menjadi Complated atau keetika antrian sudah selesai.<br>
-                            silahkan screenshot qr code tersebut dan serahkan ke pada customer service loket sebagai bukti
-                            antrian sudah selesai.
+                        <p>
+                            Qr-code akan muncul hanya ketika status antrian anda sudah diproses atau Processing.<br>
+                            silahkan screenshot qr code tersebut untuk diserahkan ke pada customer service loket
+                            sebagai bukti antrian sudah selesai.
                         </p>
                     </div>
                     </div>
@@ -383,6 +381,7 @@
                 };
                 xhr.send();
             }
+
             // Fungsi untuk mengambil QR code dari server berdasarkan ID dan counter
             function getQRCode() {
                 var xhr = new XMLHttpRequest();
@@ -399,29 +398,15 @@
                 };
                 xhr.send();
             }
+            // // Panggil fungsi getQRCode() pertama kali saat halaman dimuat
+            // getQRCode();
+
+            // // Panggil fungsi getQRCode() setiap 15 detik (15000 ms)
+            // setInterval(getQRCode, 15000); // Atur interval sesuai kebutuhan (dalam milidetik)
+
         });
     </script>
     <script>
-        // Move the function outside the document.ready to make it accessible in the global scope
-        function updateQRCode() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '{{ route('queue.getQueueData', ['id' => $id, 'counter' => $data['counter']]) }}', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    // Tampilkan QR code di halaman
-                    var qrCodeContainer = document.getElementById('qr-code-container');
-                    qrCodeContainer.innerHTML = response.qrCode;
-                }
-            };
-            xhr.send();
-        }
-
-
-        //notifikasi
-        // var previousStatus = '{{ $queue["status"] }}'; // Status awal
-
-
         function showNotification(title, body) {
                 // Periksa apakah notifikasi didukung oleh browser
                 if (!("Notification" in window)) {
@@ -446,7 +431,7 @@
                 var audio = new Audio(src);
                 audio.play();
             }
-            var previousStatus = '{{ $queue["id"] }}'; // Status awal
+            var previousStatus = '{{ $queue["status"] }}'; // Status awal
             // Update status berdasarkan id
             function updateStatusById() {
                 // Lakukan permintaan AJAX ke server
@@ -463,14 +448,16 @@
                         if (response.status !== previousStatus) {
                             // Status berubah, tampilkan notifikasi dan mainkan audio
                             if (response.status === 'processing') {
-                                $("#qrcode").load(" #qrcode");
                                 //update the notification massage to include the couter value
                                 if (response.counter === 'pembayaran'){
                                     showNotification('Antrian Diproses', 'Silahkan datang pada Loket '+response.counter+' Loket 1');
+                                    refreshPage();
                                 }else if (response.counter ==='pemesanan'){
                                     showNotification('Antrian Diproses', 'Silahkan datang pada Loket '+response.counter+' Loket 2');
+                                    refreshPage();
                                 }else if (response.counter ==='tukar-barang'){
                                     showNotification('Antrian Diproses', 'Silahkan datang pada Loket '+response.counter+' Loket 3');
+                                    refreshPage();
                                 }
                                 //ganti jadi bisa tau loket mana dari counternya
                                 // playAudio('path/to/audio/file.mp3');
@@ -478,10 +465,13 @@
                                 showNotification('Antrian Dilewati', 'Silahkan tunggu giliran berikutnya, dan pastikan untuk melihat status antriann anda.');
                                 // playAudio('path/to/audio/file.mp3');
                             } else if (response.status === 'completed') {
-                                showNotification('Antrian Selesai', 'Antrian anda sudah selesai. Terimakasih sudah mengantri, di tinggu kedatangannya kembali ya. ');
+                                showNotification('Antrian Selesai', 'Antrian anda sudah selesai. Terimakasih sudah mengantri, di tunggu kedatangannya kembali ya. ');
                             }
                             // Simpan status baru sebagai status sebelumnya
                             previousStatus = response.status;
+                        }else{
+                            previousStatus = response.status;
+
                         }
                     }
                 };
@@ -489,6 +479,16 @@
             }
             setInterval(updateStatusById, 15000);
     </script>
+   <script>
+    // Fungsi untuk merefresh halaman setelah 18 detik
+    function refreshPage() {
+        window.location.reload(); // Fungsi ini akan merefresh halaman secara keseluruhan
+    }
+    // setTimeout(refreshPage, 900000);
+    // Panggil fungsi untuk merefresh halaman setelah 18 detik (18000 ms)
+     // Ubah angka 18000 sesuai dengan waktu penundaan yang Anda inginkan (dalam milidetik)
+</script>
+
     <script>
         //jam secara live
         function updateTime() {

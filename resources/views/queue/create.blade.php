@@ -130,32 +130,51 @@
                         <h3 class="card-title">Form Antrian</h3>
                       </div>
                       <!-- /.card-header -->
+                      @if ($errors->any())
+                        <div class="alert alert-danger" style="width:auto;">
+                            @foreach ($errors->all() as $error)
+                                <h1 class="text-sm">{{ $error }}</h1>
+                            @endforeach
+                        </div>
+                    @endif
                       <!-- form start -->
                       <form action="{{ route('queue.store') }}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
-                              <label for="ename">Nama Pengunjung</label>
-                              <input type="text" class="form-control text-sm" id="name" name="name"
-                              placeholder="Enter your name" required>
+                              <label for="name">Nama Pengunjung</label>
+                              <input id="name" name="name" type="text" value="{{ old('name') }}" class="form-control text-sm @error('name') is-invalid @enderror"
+                              placeholder="Enter your name" >
+                              @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                             </div>
                             <div class="form-group">
                               <label for="tel">Nomor telephone</label>
-                              <input type="tel" class="form-control text-sm" id="phone_number" name="phone_number"
+                              <input type="tel" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" class="form-control text-sm @error('phone_number') is-invalid @enderror"
                               placeholder="Phone Number" required>
+                              @error('phone_number')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                             </div>
                             <div class="form-group">
                               <label for="counter">Loket Tujuan:</label>
-                              <select class="form-control text-sm select2bs4" name="counter" id="counter" style="width: 100%">
+                              <select name="counter" id="counter" class="form-control text-sm select2bs4 @error('counter') is-invalid @enderror" style="width: 100%">
                                 <option value="pembayaran">Loket Pembayaran</option>
                                 <option value="pemesanan">Loket Pemesanan</option>
                                 <option value="tukar-barang">Loket Tukar Barang</option>
                               </select>
+                              @error('counter')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                             </div>
                             <div class="form-check">
-                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                              <label class="form-check-label" for="exampleCheck1">
-                                Saya sudah membaca <a href="">Syarat dan ketentuan Antrian.</a>
+                              <input type="checkbox" name="checkbox" id="checkbox" class="form-check-input @error('checkbox') is-invalid @enderror">
+                              {{-- @error('checkbox')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror --}}
+                              <label class="form-check-label" for="checkbox">
+                                Saya sudah membaca <a href="">Syarat dan ketentuan Antrian</a> pada setiap loket.
                               </label>
                             </div>
                         </div>

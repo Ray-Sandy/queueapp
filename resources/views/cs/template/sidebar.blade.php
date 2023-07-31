@@ -25,30 +25,32 @@
         <a href="#" class="nav-link active">
           <i class="nav-icon fas fa-tachometer-alt"></i>
           <p>
-            Dashboard
+            Customer Service
             <i class="right fas fa-angle-left"></i>
           </p>
         </a>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="" class="nav-link active">
+            <a href="cs.index" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
-              <p>Dashboard v1</p>
+              <p>Queue Manager</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="cs.index" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Dashboard v2</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Dashboard v3</p>
+              <p>Admin</p>
             </a>
           </li>
         </ul>
+      </li>
+      <li class="nav-item menu-open">
+        <form action="{{Route('postlogout')}}" method="POST">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-link">
+                <i class="nav-icon far fa-circle text-danger"></i>
+            Logout</button>
+        </form>
       </li>
     </ul>
   </nav>

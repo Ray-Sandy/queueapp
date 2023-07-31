@@ -11,4 +11,5 @@ class Customer extends Model
     protected $fillable = [
         'nama', 'email', 'nomor_telepon', 'tiket_number', 'status'
     ];
+
 }

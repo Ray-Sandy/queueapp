@@ -7,6 +7,7 @@ use App\Models\Queue;
 // use App\Events\QueueStatusUpdated;
 use Illuminate\Http\Request;
 use App\Events\ResetQueueNumber;
+use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -77,8 +78,16 @@ class QueueController extends Controller
     }
 
 
-    public function create()
+    public function create(Request $request)
     {
+        // $request->validate([
+        //     'name' => 'required',
+        //     'phone_number' => 'required',
+        //     'counter' => 'required',
+        //     'checkbox' =>'accepted'
+        // ]);
+
+
         return view('queue.create');
     }
 
@@ -90,7 +99,8 @@ class QueueController extends Controller
             'name' => 'required',
             // 'email' => 'required|email',
             'phone_number' => 'required',
-            'counter' => 'required'
+            'counter' => 'required',
+            'checkbox' =>'accepted',
         ]);
 
         $queue = new Queue;
@@ -226,11 +236,17 @@ class QueueController extends Controller
         $queue->id = $id;
         $queue->save();
 
-        if ($queue && $queue->status === 'completed' && $queue->counter === $counter) {
+        if ($queue && $queue->counter == $counter) {
             // Data antrian yang ingin ditampilkan di QR code
             $data = [
-                'id' => $id,
-                'counter' => $counter,
+                'id'            => $id,
+                'counter'       => $counter,
+                'number'        => $queue->number,
+                'name'          => $queue->name,
+                'status'        => $queue->status,
+                'phone'         => $queue->phone,
+                'start'         => $queue->start,
+                'end'           => $queue->end,
                 // Tambahkan data antrian lainnya yang ingin ditampilkan
                 // Misalnya: 'name' => $queue->name, 'phone_number' => $queue->phone_number, dll.
             ];

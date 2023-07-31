@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         BeyondCode\LaravelWebSockets\WebSocketsServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         /*
          * Application Service Providers...
          */

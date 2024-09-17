@@ -15,6 +15,6 @@ maka pada halaman tunggu pengguna akan muncul notifikasi pada perangkat pengguna
 Jika pengguna tidak segera datang maka pada counter page mengkik tombol skip, dan menuju nomor antrian berikutnya.
 pengguna yang di skip akan terus ada hinggia 3 kali skip dan scan QR code pada counter untuk secara otomatis menyelesaikan antrian.
 
-Front     : Boostrap template AdminLTE
-Back      : PHP, javascript, HTML4
+Front     : bootstrap template AdminLTE <br>
+Back      : PHP, javascript, HTML4 <br>
 Framework : Laravel 8
